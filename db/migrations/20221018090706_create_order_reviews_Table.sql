@@ -1,0 +1,18 @@
+-- migrate:up
+CREATE TABLE reviews(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(300) NOT NULL,
+  user_upload_image_url VARCHAR(3000) NOT NULL,
+  contant VARCHAR(3000) NOT NULL,
+  user_id INT NOT NULL,
+  product_id INT NOT NULL,
+  help_count INT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users (id),
+  FOREIGN KEY (product_id) REFERENCES products (id)
+);
+
+-- migrate:down
+DROP TABLE IF EXISTS reviews;
+
