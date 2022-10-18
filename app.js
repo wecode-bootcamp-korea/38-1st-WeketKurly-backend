@@ -9,6 +9,7 @@ const router = require("./router");
 
 const app = express();
 const server = http.createServer(app);
+const myDataSource = require("./util/dataSource");
 
 const PORT = process.env.PORT;
 
@@ -23,4 +24,12 @@ app.get("/ping", (req, res, next) => {
 
 server.listen(PORT, () => {
   console.log(`server open with port ${PORT}`);
+  myDataSource
+    .initialize()
+    .then(() => {
+      console.log("dataSource has been init");
+    })
+    .catch(() => {
+      console.log("dataSource init failed");
+    });
 });
