@@ -10,6 +10,7 @@ const router = require("./router");
 const app = express();
 const server = http.createServer(app);
 const myDataSource = require("./util/dataSource");
+const { globalErrorHandler } = require("./util/error");
 
 const PORT = process.env.PORT;
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 app.use(router);
+app.use(globalErrorHandler);
 
 app.get("/ping", (req, res, next) => {
   res.json({ message: "pong" });
