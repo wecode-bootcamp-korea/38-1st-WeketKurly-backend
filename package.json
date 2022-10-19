@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/wecode-bootcamp-korea/38-1st-WeketKurly-backend#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dbmate": "^1.0.3",
     "dotenv": "^16.0.3",
