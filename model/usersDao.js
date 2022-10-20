@@ -10,4 +10,14 @@ const createUser = async (userId, hashPwd, name, email, genderId, birthday) => {
   );
 };
 
-module.exports = { createUser };
+const searchUser = async (userId) => {
+  const data = await myDataSource.query(
+    `SELECT id, userId, password
+    FROM users
+    WHERE userId = ?`,
+    [userId]
+  );
+  return data[0];
+};
+
+module.exports = { createUser, searchUser };
