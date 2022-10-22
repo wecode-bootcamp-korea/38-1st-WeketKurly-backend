@@ -9,7 +9,7 @@ const getProducts = async () => {
     p.price AS price
   FROM products AS p
   ORDER BY RAND()
-  LIMIT 10;
+  LIMIT 12;
   `);
 };
 
@@ -24,7 +24,7 @@ const categoriesProducts = async (categoriesId) => {
   INNER JOIN sub_categories AS sc ON p.sub_category_id = sc.id
   INNER JOIN categories c ON sc.category_id = c.id
   WHERE c.id = ${categoriesId}
-  LIMIT 6
+  LIMIT 12
   OFFSET 0
   `);
 };
