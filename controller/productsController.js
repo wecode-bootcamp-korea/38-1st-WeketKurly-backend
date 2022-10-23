@@ -18,4 +18,10 @@ const getMdProducts = async (req, res, next) => {
   return res.json({ item: data });
 };
 
-module.exports = { getProducts, getMdProducts };
+const getSpecialPriceProducts = async (req, res, next) => {
+  const data = await productsService.getSpecialPriceProducts();
+
+  return res.json({ item: data });
+};
+
+module.exports = { getProducts, getMdProducts, getSpecialPriceProducts };

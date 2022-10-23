@@ -8,4 +8,8 @@ const getMdProducts = async (categoriesId) => {
   return await productsDao.categoriesProducts(categoriesId);
 };
 
-module.exports = { getProducts, getMdProducts };
+const getSpecialPriceProducts = async () => {
+  return await productsDao.getSpecialPriceProducts();
+};
+
+module.exports = { getProducts, getMdProducts, getSpecialPriceProducts };
