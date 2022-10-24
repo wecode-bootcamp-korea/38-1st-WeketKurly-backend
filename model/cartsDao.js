@@ -4,11 +4,10 @@ const checkAllProduct = async() =>{
     try{
         const [AllProduct] = await appDataSource.query(
             `
-            select conunt(*) 
+            select count(*) 
             from products
             `)
-        return Object.values(AllProduct)[0]
-        
+        return Object.values(AllProduct)[0]        
     }
     catch(err){ const error = new Error('INVALID_DATA_INPUT');
     error.statusCode = 500;
@@ -39,6 +38,7 @@ const getCart = async (userId) => {
       const carts = await appDataSource.query(
         `
         select
+        c.id,
         c.quantity,
         c.product_id,
         p.packing_type_id,
