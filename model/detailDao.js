@@ -1,6 +1,6 @@
 const myDataSource = require("../util/dataSource");
 
-const getProducts = async (productId) => {
+const getProduct = async (productId) => {
   const data = await myDataSource.query(
     `
   SELECT * , 
@@ -15,4 +15,4 @@ const getProducts = async (productId) => {
   return data;
 };
 
-module.exports = { getProducts };
+module.exports = { getProduct };
