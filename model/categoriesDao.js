@@ -11,12 +11,11 @@ const getCategoriesName = async () => {
 
 const getSubCategoriesName = async (categoriesId) => {
   return await myDataSource.query(
-    `
-        SELECT    
-          sc.id AS subCategoriesId,
-          sc.name AS subCategoriesName
-        FROM sub_categories AS sc
-        WHERE sc.category_id = ?
+    `SELECT    
+        sc.id AS subCategoriesId,
+        sc.name AS subCategoriesName
+      FROM sub_categories AS sc
+      WHERE sc.category_id = ?
     `,
     [categoriesId]
   );
