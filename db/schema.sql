@@ -33,6 +33,8 @@ CREATE TABLE `carts` (
   `user_id` int NOT NULL,
   `product_id` int NOT NULL,
   `quantity` int NOT NULL,
+  `check_status` int DEFAULT '0',
+  `status` int DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `product_id` (`product_id`),
@@ -188,8 +190,8 @@ CREATE TABLE `product_QnA` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `product_id` (`product_id`),
-  CONSTRAINT `product_QnA_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `product_QnA_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+  CONSTRAINT `product_qna_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `product_qna_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -213,6 +215,8 @@ CREATE TABLE `products` (
   `expiration_date` varchar(1000) NOT NULL,
   `price` decimal(10,0) NOT NULL,
   `detail_image_url` varchar(1000) NOT NULL,
+  `quantity` int DEFAULT '0',
+  `stock` int DEFAULT '999',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -256,7 +260,7 @@ CREATE TABLE `reviews` (
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL,
   PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -327,7 +331,7 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping routines for database '1st_project'
+-- Dumping routines for database 'database_test'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
