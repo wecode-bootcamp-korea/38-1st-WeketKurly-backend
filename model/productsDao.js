@@ -3,6 +3,7 @@ const myDataSource = require("../util/dataSource");
 const getProducts = async () => {
   return await myDataSource.query(`
   SELECT
+    p.id AS productId,
     p.name AS productName,
     p.thumnail_image_url AS thumbnailImageUrl,
     p.short_description AS shortDescription,
@@ -16,6 +17,7 @@ const getProducts = async () => {
 const categoriesProducts = async (categoriesId) => {
   return await myDataSource.query(`
   SELECT
+    p.id AS productId,
     p.name AS productName,
     p.thumnail_image_url AS thumbnailImageUrl,
     p.short_description AS shortDescription,
@@ -31,7 +33,8 @@ const categoriesProducts = async (categoriesId) => {
 
 const getAllProducts = async (whereClause, sort) => {
   return await myDataSource.query(`
-    SELECT 
+    SELECT
+      p.id AS productId,
       p.name AS productName,
       p.thumnail_image_url AS thumbnailImageUrl,
       p.short_description AS shortDescription,
