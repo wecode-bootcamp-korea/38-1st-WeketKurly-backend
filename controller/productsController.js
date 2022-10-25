@@ -24,4 +24,21 @@ const getSpecialPriceProducts = async (req, res, next) => {
   return res.json({ item: data });
 };
 
-module.exports = { getProducts, getMdProducts, getSpecialPriceProducts };
+const getAllProducts = async (req, res, next) => {
+  const { maincategoriesId, subcategoriesId, sorttype } = req.query;
+
+  const data = await productsService.getAllProducts(
+    maincategoriesId,
+    subcategoriesId,
+    sorttype
+  );
+
+  return res.json({ item: data });
+};
+
+module.exports = {
+  getProducts,
+  getMdProducts,
+  getSpecialPriceProducts,
+  getAllProducts,
+};
