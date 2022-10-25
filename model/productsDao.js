@@ -36,8 +36,8 @@ const getSpecialPriceProducts = async () => {
       sp.discount AS discount,
       p.name AS productName,
       p.short_description AS shortDescription,
-      p.price AS productPrice,
-      p.thumnail_image_url AS thumbnailIamgeUrl
+      p.price AS price,
+      p.thumnail_image_url AS thumbnailImageUrl
     FROM special_price AS sp
     INNER JOIN products AS p ON sp.products_id = p.id
   `);
