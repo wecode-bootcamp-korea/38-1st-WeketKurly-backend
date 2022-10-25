@@ -8,11 +8,7 @@ const getMdProducts = async (categoriesId) => {
   return await productsDao.categoriesProducts(categoriesId);
 };
 
-const getCategoriesAllProducts = async (
-  maincategoriesId,
-  subcategoriesId,
-  sorttype
-) => {
+const getAllProducts = async (maincategoriesId, subcategoriesId, sorttype) => {
   let sort = ``;
   let categoriesId = ``;
 
@@ -32,7 +28,7 @@ const getCategoriesAllProducts = async (
     categoriesId = `WHERE sc.id = ${subcategoriesId}`;
   }
 
-  return await productsDao.getCategoriesAllProducts(sort, categoriesId);
+  return await productsDao.getAllProducts(sort, whereCluse);
 };
 
-module.exports = { getProducts, getMdProducts, getCategoriesAllProducts };
+module.exports = { getProducts, getMdProducts, getAllProducts };

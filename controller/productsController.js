@@ -18,10 +18,10 @@ const getMdProducts = async (req, res, next) => {
   return res.json({ mdRecommand: data });
 };
 
-const getCategoriesAllProducts = async (req, res, next) => {
+const getAllProducts = async (req, res, next) => {
   const { maincategoriesId, subcategoriesId, sorttype } = req.query;
 
-  const data = await productsService.getCategoriesAllProducts(
+  const data = await productsService.getAllProducts(
     maincategoriesId,
     subcategoriesId,
     sorttype
@@ -30,4 +30,4 @@ const getCategoriesAllProducts = async (req, res, next) => {
   return res.json({ item: data });
 };
 
-module.exports = { getProducts, getMdProducts, getCategoriesAllProducts };
+module.exports = { getProducts, getMdProducts, getAllProducts };

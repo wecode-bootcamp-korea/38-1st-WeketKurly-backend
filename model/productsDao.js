@@ -29,7 +29,7 @@ const categoriesProducts = async (categoriesId) => {
   `);
 };
 
-const getCategoriesAllProducts = async (categoriesId, sort) => {
+const getAllProducts = async (whereClause, sort) => {
   return await myDataSource.query(`
     SELECT 
       p.name AS productName,
@@ -40,12 +40,12 @@ const getCategoriesAllProducts = async (categoriesId, sort) => {
     INNER JOIN sub_categories AS sc ON p.sub_category_id = sc.id
     INNER JOIN categories c ON sc.category_id = c.id
     ${sort}
-    ${categoriesId}
+    ${whereClause}
     `);
 };
 
 module.exports = {
   getProducts,
   categoriesProducts,
-  getCategoriesAllProducts,
+  getAllProducts,
 };
