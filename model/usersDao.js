@@ -17,6 +17,7 @@ const searchUser = async (userId) => {
     WHERE userId = ?`,
     [userId]
   );
+  console.log(data);
   return data[0];
 };
 
