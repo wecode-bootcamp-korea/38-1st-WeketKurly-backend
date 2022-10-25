@@ -1,16 +1,12 @@
 const likeDao = require("../model/likesDao");
 
 const getLikes = async (userId) => {
-  
-    const getLike = await likeDao.getLikes(userId)
-      return getLike;
+      return await likeDao.getLikes(userId);
 };
 
 const inputLikes = async (productId, userId) => {
 
   const checkLike = await likeDao.checkLikes(productId, userId);
-
-  console.log(checkLike);
 
   if (!checkLike.exist) {
     const err = new Error("PRODUCT_DOES_NOT_EXIST");
