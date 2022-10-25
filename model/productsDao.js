@@ -3,6 +3,7 @@ const myDataSource = require("../util/dataSource");
 const getProducts = async () => {
   return await myDataSource.query(`
   SELECT
+    p.id AS productId,
     p.name AS productName,
     p.thumnail_image_url AS thumbnailImageUrl,
     p.price AS price
@@ -15,6 +16,7 @@ const getProducts = async () => {
 const categoriesProducts = async (categoriesId) => {
   return await myDataSource.query(`
   SELECT
+    p.id AS productId,
     p.name AS productName,
     p.thumnail_image_url AS thumbnailImageUrl,
     p.price AS price
@@ -30,6 +32,7 @@ const categoriesProducts = async (categoriesId) => {
 const getSpecialPriceProducts = async () => {
   return await myDataSource.query(`
     SELECT 
+      p.id AS productId,
       sp.discount AS discount,
       p.name AS productName,
       p.short_description AS shortDescription,
