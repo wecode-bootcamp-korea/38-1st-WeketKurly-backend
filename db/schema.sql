@@ -212,7 +212,7 @@ CREATE TABLE `products` (
   `allerge` varchar(1000) DEFAULT NULL,
   `expiration_date` varchar(1000) NOT NULL,
   `price` decimal(10,0) NOT NULL,
-  `detail_image_url` varchar(1000) NOT NULL,
+  `detail_image_url` varchar(3000) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

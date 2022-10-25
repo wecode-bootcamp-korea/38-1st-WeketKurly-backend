@@ -1,24 +1,16 @@
 const myDataSource = require("../util/dataSource");
 
-const getCategoriesName = async () => {
+const getCategories = async () => {
   return await myDataSource.query(`
-        SELECT 
-          c.id AS mainCategoriesId,
-          c.name AS mainCategoriesName
-        FROM categories AS c
-    `);
+  SELECT c.id AS mainCategoriesId, c.name AS mainCategoriesName,
+    JSON_ARRAYAGG(
+      JSON_OBJECT(
+        "subCategoriesId", sc.id,
+        "subCategoriesName", sc.name)
+    ) AS subCategories
+  FROM categories AS c
+  LEFT JOIN sub_categories AS sc ON sc.category_id = c.id
+  GROUP BY c.id`);
 };
 
-const getSubCategoriesName = async (categoriesId) => {
-  return await myDataSource.query(
-    `SELECT    
-        sc.id AS subCategoriesId,
-        sc.name AS subCategoriesName
-      FROM sub_categories AS sc
-      WHERE sc.category_id = ?
-    `,
-    [categoriesId]
-  );
-};
-
-module.exports = { getCategoriesName, getSubCategoriesName };
+module.exports = { getCategories };

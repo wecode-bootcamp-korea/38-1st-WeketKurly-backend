@@ -1,9 +1,9 @@
 const categoriesService = require("../service/categoriesService");
 
-const getCategoriesName = async (req, res, next) => {
-  const categories = await categoriesService.getCategoriesName();
+const getCategories = async (req, res, next) => {
+  const categories = await categoriesService.getCategories();
 
   return res.status(200).json({ data: categories });
 };
 
-module.exports = { getCategoriesName };
+module.exports = { getCategories };
