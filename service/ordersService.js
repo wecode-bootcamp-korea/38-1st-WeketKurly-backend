@@ -8,8 +8,10 @@ const { response, errResponse } = require('../util/response');
 // 주문서 조회하기(장바구니 상품)
 const getOrderInfo = async (userId) => {
     try {
-        const getOrderInfo = await orderDao.getOrderInfo(userId);
-
+        const connection = await pool.createQueryRunner();
+        await connection.connect();
+        const getOrderInfo = await orderDao.getOrderInfo(connection, userId);
+        connection.release();
         return getOrderInfo;
     } catch (err) {
         logger.error(`App - getOrderInfo Service error\n: ${err.message} \n${JSON.stringify(err)}`);
@@ -20,8 +22,10 @@ const getOrderInfo = async (userId) => {
 // 주문서 조회하기(유저 정보)
 const getUserInfo = async (userId) => {
     try {
+        const connection = await pool.createQueryRunner();
+        await connection.connect();
         const getUserInfo = await orderDao.getUserInfo(connection, userId);
-
+        connection.release();
         return getUserInfo;
     } catch (err) {
         logger.error(`App - getUserInfo Service error\n: ${err.message} \n${JSON.stringify(err)}`);
@@ -38,55 +42,43 @@ const orders = async (
         await connection.connect();
         try {
             connection.startTransaction();
+            const inputOrderItemResult = await orderDao.inputOrderItems(
+                connection, productId, quantity, totalPrice, shipmentId
+            );
+            const orderResult = await orderDao.inputOrder(
+                connection, userId
+            );
 
             const checkStock = await cartDao.checkStock(productId);
 
             if(quantity > checkStock) {
-                const updateItemStatus2 = await orderDao.updateItemStatus2(connection, userId);
-                return errResponse(baseResponse.PRODUCT_NOT_QUANTITY), updateItemStatus2;
+                return errResponse(baseResponse.PRODUCT_NOT_QUANTITY)
             } 
-
             if (quantity <= checkStock) {
-                const point = await orderDao.getPoint(userId);
-                const getItemStatus = await orderDao.getItemStatus(userId);
-                const getOrderStatus = await orderDao.getOrderStatus(userId);                
+                const updateItemStatus = await orderDao.updateItemStatus(productId);
+                const point = await orderDao.getPoint(userId); 
                 if(totalPrice > point) {
                     return  errResponse(baseResponse.USER_POINT_FAIL)
                 }
-                    if((getItemStatus.ostatus == (2 || 3)) && (getOrderStatus == (2 || 3))) {
-                        const updateItemStatus1 = await orderDao.updateItemStatus1(connection, userId);
-                        const updateOrderStatus1 = await orderDao.updateOrderStatus1(connection, userId);
-                        return updateItemStatus1, updateOrderStatus1;
-                    }
-                if((totalPrice <= point) && (getOrderStatus.ostatus == 1) && (getItemStatus.istatus == 1)) {
-                const inputOrderItemResult = await orderDao.inputOrderItems(
-                    connection, productId, quantity, totalPrice, shipmentId
-                );
-                const orderResult = await orderDao.inputOrder(
-                    connection, userId
-                );
+                if((totalPrice <= point) && (updateItemStatus == 1)) {
                 const inputPayResult = await orderDao.pointDeduct(
                     connection, totalPrice, userId
                 );
-                const updateOrderStatus2 = await orderDao.updateOrderStatus2(connection, userId);
+                const updateOrderStatus = await orderDao.updateOrderStatus(connection, userId);
                 await connection.commitTransaction();
                 connection.release();
                 deleteCart(userId);
-                return inputOrderItemResult, updateOrderStatus2, orderResult, inputPayResult;
+                return inputOrderItemResult, updateOrderStatus, orderResult, inputPayResult;
                 }
             };   
         } catch (err) {
-            const updateItemStatus3 = await orderDao.updateItemStatus3(connection, userId);
-            const updateOrderStatus3 = await orderDao.updateOrderStatus3(connection, userId);
             await connection.rollbackTransaction();
             connection.release();
-            return errResponse(baseResponse.DB_ERROR), updateItemStatus3, updateOrderStatus3;
+            return errResponse(baseResponse.DB_ERROR);
         }
     } catch (err) {
-        const updateItemStatus3 = await orderDao.updateItemStatus3(connection, userId);
-        const updateOrderStatus3 = await orderDao.updateOrderStatus3(connection, userId);
         logger.error(`App - orders Service error\n: ${err.message}`);
-        return errResponse(baseResponse.DB_ERROR), updateItemStatus3, updateOrderStatus3;
+        return errResponse(baseResponse.DB_ERROR);
     }
 };
 
