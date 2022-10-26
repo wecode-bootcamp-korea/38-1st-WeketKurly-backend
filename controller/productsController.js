@@ -3,7 +3,7 @@ const productsService = require("../service/productsService");
 const getProducts = async (req, res, next) => {
   const product = await productsService.getProducts();
 
-  return res.json({ product: product });
+  return res.json({ item: product });
 };
 
 const getMdProducts = async (req, res, next) => {
@@ -15,7 +15,7 @@ const getMdProducts = async (req, res, next) => {
 
   const data = await productsService.getMdProducts(categoriesId);
 
-  return res.json({ mdRecommand: data });
+  return res.json({ item: data });
 };
 
 const getAllProducts = async (req, res, next) => {

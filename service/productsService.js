@@ -10,7 +10,7 @@ const getMdProducts = async (categoriesId) => {
 
 const getAllProducts = async (maincategoriesId, subcategoriesId, sorttype) => {
   let sort = ``;
-  let categoriesId = ``;
+  let whereCluse = ``;
 
   if (sorttype == 1) {
     sort = ``;
@@ -23,9 +23,9 @@ const getAllProducts = async (maincategoriesId, subcategoriesId, sorttype) => {
   }
 
   if (maincategoriesId) {
-    categoriesId = `WHERE c.id = ${maincategoriesId}`;
+    whereCluse = `WHERE c.id = ${maincategoriesId}`;
   } else if (subcategoriesId) {
-    categoriesId = `WHERE sc.id = ${subcategoriesId}`;
+    whereCluse = `WHERE sc.id = ${subcategoriesId}`;
   }
 
   return await productsDao.getAllProducts(sort, whereCluse);
