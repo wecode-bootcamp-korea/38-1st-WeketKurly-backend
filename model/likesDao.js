@@ -1,19 +1,18 @@
 const appDataSource = require("../util/dataSource");
 
-// 찜 목록에 있는지 체크
 const checkLikes = async (userId, productId) => {
-      const [likes] = await appDataSource.query(
-    `select exists(
-        select *
-        from likes
-        where user_id = ${userId} 
-        and product_id = ${productId}) as exist`
-  );
+    const res = await appDataSource.query(`
+        select exists(
+            select *
+            from likes
+            where user_id = ${userId} 
+            and product_id = ${productId}
+        )`
+    );
 
-  return likes;
+    return res.isExist()
 };
 
-// 찜 목록 조회
 const getLikes = async (userId) => {
     const likes = await appDataSource.query(
         `
@@ -28,10 +27,9 @@ const getLikes = async (userId) => {
         inner join products p on p.id = l.product_id
         where l.user_id = ${userId}`
     );
-    return likes;
+    return likes.fetchAll();
 };
 
-// 찜하기
 const inputLikes = async (userId, productId) => {
     const likes = await appDataSource.query(
     `
@@ -44,7 +42,6 @@ const inputLikes = async (userId, productId) => {
     return likes;
 }
 
-// 찜 취소하기
 const deleteLikes = async (userId, productId) => {
     const likes = await appDataSource.query(
     `

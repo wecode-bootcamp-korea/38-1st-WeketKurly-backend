@@ -1,20 +1,22 @@
-const myDataSource = require("../util/dataSource");
+const database = require("../util/dataSource");
 
 const getProducts = async () => {
-  return await myDataSource.query(`
-  SELECT
-    p.id AS productId,
-    p.name AS productName,
-    p.thumnail_image_url AS thumbnailImageUrl,
-    p.price AS price
-  FROM products AS p
-  ORDER BY RAND()
-  LIMIT 12;
+  const products = await database.query(`
+    SELECT
+      p.id AS productId,
+      p.name AS productName,
+      p.thumnail_image_url AS thumbnailImageUrl,
+      p.price AS price
+    FROM products AS p
+    ORDER BY RAND()
+    LIMIT 12;
   `);
+
+  return products.fetchAll()
 };
 
 const categoriesProducts = async (categoriesId) => {
-  return await myDataSource.query(`
+  return await database.query(`
   SELECT
     p.id AS productId,
     p.name AS productName,

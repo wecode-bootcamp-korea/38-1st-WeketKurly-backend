@@ -5,24 +5,10 @@ const getLikes = async (userId) => {
 };
 
 const inputLikes = async (productId, userId) => {
+  const isExist = await likeDao.checkLikes(productId, userId);
 
-  const checkLike = await likeDao.checkLikes(productId, userId);
-
-  if (!checkLike.exist) {
-    const err = new Error("PRODUCT_DOES_NOT_EXIST");
-    err.statusCode = 404;
-    throw err;
-  }
-
-    if (checkLike.exist === '0') {
-      const inputLike = await likeDao.inputLikes(productId, userId);
-  
-      return inputLike;
-    } else if (checkLike.exist !== '0') {
-      const deleteLike = await likeDao.deleteLikes(productId, userId);
-  
-      return deleteLike;
-    }
+  if (isExist) return await likeDao.inputLikes(productId, userId);
+  if (!isExist) return await likeDao.deleteLikes(productId, userId);
 };
 
 module.exports = { getLikes, inputLikes };

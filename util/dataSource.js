@@ -1,6 +1,17 @@
 const { DataSource } = require("typeorm");
 
-const myDataSource = new DataSource({
+class Database {
+  constructor(dataSource) {
+    this.dataSource = dataSource;
+  }
+
+  async query(sql, params) {
+    return await this.dataSource.query(sql, params);
+  }
+
+}
+
+const typeOrmDataSource = new DataSource({
   type: process.env.TYPEORM_CONNECTION,
   host: process.env.TYPEORM_HOST,
   port: process.env.TYPEORM_PORT,
@@ -9,4 +20,7 @@ const myDataSource = new DataSource({
   database: process.env.TYPEORM_DATABASE,
 });
 
-module.exports = myDataSource;
+const database = new Database(typeOrmDataSource)
+
+
+module.exports = database;
