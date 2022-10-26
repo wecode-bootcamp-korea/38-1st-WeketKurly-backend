@@ -30,7 +30,6 @@ const getAllProducts = async (maincategoriesId, subcategoriesId, sorttype) => {
     whereClause = `WHERE c.id = ${maincategoriesId}`;
   } else if (subcategoriesId) {
     whereClause = `WHERE sc.id = ${subcategoriesId}`;
-  }
 
   return await productsDao.getAllProducts(sort, whereClause);
 };
