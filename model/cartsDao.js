@@ -4,7 +4,7 @@ const checkAllProduct = async() =>{
     try{
         const [AllProduct] = await appDataSource.query(
             `
-            select conunt(*) 
+            select count(*) 
             from products
             `)
         return Object.values(AllProduct)[0]
@@ -39,6 +39,7 @@ const getCart = async (userId) => {
       const carts = await appDataSource.query(
         `
         select
+        c.id as cartId,
         c.quantity,
         c.product_id,
         p.packing_type_id,
