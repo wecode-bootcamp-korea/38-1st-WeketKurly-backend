@@ -18,6 +18,12 @@ const getMdProducts = async (req, res, next) => {
   return res.json({ item: data });
 };
 
+const getSpecialPriceProducts = async (req, res, next) => {
+  const data = await productsService.getSpecialPriceProducts();
+
+  return res.json({ item: data });
+};
+
 const getAllProducts = async (req, res, next) => {
   const { maincategoriesId, subcategoriesId, sorttype } = req.query;
 
@@ -30,4 +36,9 @@ const getAllProducts = async (req, res, next) => {
   return res.json({ item: data });
 };
 
-module.exports = { getProducts, getMdProducts, getAllProducts };
+module.exports = {
+  getProducts,
+  getMdProducts,
+  getSpecialPriceProducts,
+  getAllProducts,
+};

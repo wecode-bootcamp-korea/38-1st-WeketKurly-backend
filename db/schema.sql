@@ -19,7 +19,7 @@ CREATE TABLE `big_banner_table` (
   `id` int NOT NULL AUTO_INCREMENT,
   `image_url` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +283,23 @@ CREATE TABLE `small_banner_table` (
   `id` int NOT NULL AUTO_INCREMENT,
   `image_url` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `special_price`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `special_price` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `discount` int NOT NULL,
+  `products_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `products_id` (`products_id`),
+  CONSTRAINT `special_price_ibfk_1` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,7 +339,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_email_ukey` (`email`),
   KEY `gender_id` (`gender_id`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`gender_id`) REFERENCES `genders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -363,5 +379,7 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20221018090653'),
   ('20221018090706'),
   ('20221020073800'),
-  ('20221020073813');
+  ('20221020073813'),
+  ('20221023062453'),
+  ('20221025043917');
 UNLOCK TABLES;

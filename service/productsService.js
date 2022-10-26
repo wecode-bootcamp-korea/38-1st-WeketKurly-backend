@@ -8,9 +8,13 @@ const getMdProducts = async (categoriesId) => {
   return await productsDao.categoriesProducts(categoriesId);
 };
 
+const getSpecialPriceProducts = async () => {
+  return await productsDao.getSpecialPriceProducts();
+};
+
 const getAllProducts = async (maincategoriesId, subcategoriesId, sorttype) => {
   let sort = ``;
-  let whereCluse = ``;
+  let whereClause = ``;
 
   if (sorttype == 1) {
     sort = ``;
@@ -23,12 +27,16 @@ const getAllProducts = async (maincategoriesId, subcategoriesId, sorttype) => {
   }
 
   if (maincategoriesId) {
-    whereCluse = `WHERE c.id = ${maincategoriesId}`;
+    whereClause = `WHERE c.id = ${maincategoriesId}`;
   } else if (subcategoriesId) {
-    whereCluse = `WHERE sc.id = ${subcategoriesId}`;
-  }
+    whereClause = `WHERE sc.id = ${subcategoriesId}`;
 
-  return await productsDao.getAllProducts(sort, whereCluse);
+  return await productsDao.getAllProducts(sort, whereClause);
 };
 
-module.exports = { getProducts, getMdProducts, getAllProducts };
+module.exports = {
+  getProducts,
+  getMdProducts,
+  getSpecialPriceProducts,
+  getAllProducts,
+};
