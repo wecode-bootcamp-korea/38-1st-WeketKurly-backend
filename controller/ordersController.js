@@ -29,7 +29,7 @@ const addOrder = async (req, res) => {
         productId, quantity, totalPrice, shipmentId
     } = req.body;
 
-    const order = await orderService.orders(
+    const order = await orderService.createOrders(
         userId, productId, quantity, totalPrice, shipmentId
     );
 
