@@ -4,6 +4,6 @@ const commentsController = require("../controller/commentsController");
 const { loginRequired } = require("../util/auth");
 
 router.post("", loginRequired, commentsController.createComment);
-router.get("", commentsController.searchComment);
+router.get("/:productId", commentsController.searchComment);
 
 module.exports = { router };

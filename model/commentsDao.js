@@ -1,16 +1,16 @@
 const myDataSource = require("../util/dataSource");
 
-const createComment = async (title, contant, productId, helpCount, userId) => {
+const createComment = async (title, contents, productId, userId) => {
   const data = await myDataSource.query(
     `INSERT INTO reviews (
             title, contant, user_id, product_id, help_count
         ) VALUES (?, ?, ?, ?, ?)`,
-    [title, contant, userId, productId, helpCount]
+    [title, contents, userId, productId, 0]
   );
   return data.insertId;
 };
 
-const searchComment = async () => {
+const searchComment = async (productId) => {
   return await myDataSource.query(`
   SELECT 
   product_id AS productId,
@@ -25,6 +25,7 @@ const searchComment = async () => {
   ) AS review
   FROM reviews AS r
   LEFT JOIN users AS u ON r.user_id = u.id
+  WHERE product_id = ${productId}
   GROUP BY productId 
   `);
 };

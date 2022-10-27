@@ -3,24 +3,24 @@ const { catchAsync } = require("../util/error");
 
 const createComment = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
-  const { title, contant, productId, helpCount } = req.body;
+  const { title, contents, productId } = req.body;
 
-  if (!title || !contant || !productId || !helpCount) {
+  if (!title || !contents || !productId) {
     return res.status(400).json({ message: "KEY_ERROR" });
   }
 
   const data = await commentsService.createComment(
     title,
-    contant,
+    contents,
     productId,
-    helpCount,
     userId
   );
   return res.json({ data: data });
 });
 
 const searchComment = catchAsync(async (req, res, next) => {
-  const data = await commentsService.searchComment();
+  const { productId } = req.params;
+  const data = await commentsService.searchComment(productId);
   return res.json({ data: data });
 });
 
