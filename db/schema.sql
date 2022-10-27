@@ -38,7 +38,7 @@ CREATE TABLE `carts` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,28 +100,28 @@ CREATE TABLE `order_item_status` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `order_itmes`
+-- Table structure for table `order_items`
 --
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order_itmes` (
+CREATE TABLE `order_items` (
   `id` int NOT NULL AUTO_INCREMENT,
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
   `quantity` int NOT NULL,
   `total_price` decimal(10,0) NOT NULL,
-  `order_item_status_id` int NOT NULL,
+  `order_item_status_id` int NOT NULL DEFAULT '2',
   `shipment_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `shipment_id` (`shipment_id`),
-  KEY `order_item_status_id` (`order_item_status_id`),
   KEY `product_id` (`product_id`),
   KEY `order_id` (`order_id`),
-  CONSTRAINT `order_itmes_ibfk_1` FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`id`),
-  CONSTRAINT `order_itmes_ibfk_2` FOREIGN KEY (`order_item_status_id`) REFERENCES `order_item_status` (`id`),
-  CONSTRAINT `order_itmes_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  CONSTRAINT `order_itmes_ibfk_4` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+  KEY `order_items_ibfk_2` (`order_item_status_id`),
+  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`id`),
+  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`order_item_status_id`) REFERENCES `order_item_status` (`id`),
+  CONSTRAINT `order_items_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `order_items_ibfk_4` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -147,11 +147,11 @@ CREATE TABLE `order_status` (
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `order_status_id` int NOT NULL,
+  `order_status_id` int NOT NULL DEFAULT '1',
   `ordered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `order_status_id` (`order_status_id`),
   KEY `user_id` (`user_id`),
+  KEY `orders_ibfk_1` (`order_status_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`order_status_id`) REFERENCES `order_status` (`id`),
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -212,9 +212,9 @@ CREATE TABLE `products` (
   `expiration_date` varchar(1000) NOT NULL,
   `price` decimal(10,0) NOT NULL,
   `detail_image_url` varchar(3000) DEFAULT NULL,
+  `stock` int NOT NULL DEFAULT '999',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `stock` int NOT NULL DEFAULT '999',
   PRIMARY KEY (`id`),
   KEY `sub_category_id` (`sub_category_id`),
   KEY `packing_type_id` (`packing_type_id`),
@@ -243,7 +243,7 @@ CREATE TABLE `reviews` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -384,7 +384,13 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20221023115459'),
   ('20221023122837'),
   ('20221025043917'),
+  ('20221025092955'),
+  ('20221025110155'),
   ('20221025111418'),
+  ('20221025114106'),
+  ('20221026072339'),
+  ('20221026105433'),
+  ('20221027053008');
   ('20221026072339');
   ('20221025043917');
 UNLOCK TABLES;

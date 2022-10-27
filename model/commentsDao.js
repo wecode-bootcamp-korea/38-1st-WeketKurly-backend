@@ -15,15 +15,16 @@ const searchComment = async () => {
   SELECT 
   product_id AS productId,
   JSON_ARRAYAGG(
-    JSON_OBJECT(    
-      "commentId", id,
-      "commentTitle", title,
-      "commentContent", contant,  
-      "userId", user_id, 
-      "helpCount", help_count  
-      )
-  ) AS comment
-  FROM reviews
+    JSON_OBJECT(
+    "reviewId", r.id,
+    "reviewTitle", r.title,
+    "reviewContent", r.contant,
+    "reviewHelpCount", r.help_count,
+    "userName", u.name  
+    )
+  ) AS review
+  FROM reviews AS r
+  LEFT JOIN users AS u ON r.user_id = u.id
   GROUP BY productId 
   `);
 };
