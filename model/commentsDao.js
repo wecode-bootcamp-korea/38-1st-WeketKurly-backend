@@ -12,8 +12,8 @@ const createComment = async (title, contents, productId, userId) => {
 
 const searchComment = async (productId) => {
   return await myDataSource.query(`
-  SELECT 
-  product_id AS productId,
+  SELECT
+  product_id AS product_id,
   JSON_ARRAYAGG(
     JSON_OBJECT(
     "reviewId", r.id,

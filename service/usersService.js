@@ -51,7 +51,10 @@ const signIn = async (userId, password) => {
     throw error;
   }
 
-  const accessToken = jwt.sign({ id: user.userId }, process.env.JWT_SECRET_KEY);
+  const accessToken = {
+    accessToken: jwt.sign({ id: user.userId }, process.env.JWT_SECRET_KEY),
+    userName: user.name,
+  };
 
   return accessToken;
 };

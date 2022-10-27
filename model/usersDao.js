@@ -12,12 +12,12 @@ const createUser = async (userId, hashPwd, name, email, genderId, birthday) => {
 
 const searchUser = async (userId) => {
   const data = await myDataSource.query(
-    `SELECT id, userId, password
+    `SELECT id, userId, password, name
     FROM users
     WHERE userId = ?`,
     [userId]
   );
-  console.log(data);
+
   return data[0];
 };
 
