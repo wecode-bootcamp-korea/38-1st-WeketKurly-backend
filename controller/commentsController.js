@@ -1,6 +1,7 @@
 const commentsService = require("../service/commentsService");
+const { catchAsync } = require("../util/error");
 
-const createComment = async (req, res, next) => {
+const createComment = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
   const { title, contant, productId, helpCount } = req.body;
 
@@ -16,11 +17,11 @@ const createComment = async (req, res, next) => {
     userId
   );
   return res.json({ data: data });
-};
+});
 
-const searchComment = async (req, res, next) => {
+const searchComment = catchAsync(async (req, res, next) => {
   const data = await commentsService.searchComment();
   return res.json({ data: data });
-};
+});
 
 module.exports = { createComment, searchComment };
