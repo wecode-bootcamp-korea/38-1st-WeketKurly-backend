@@ -19,7 +19,7 @@ CREATE TABLE `big_banner_table` (
   `id` int NOT NULL AUTO_INCREMENT,
   `image_url` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `carts` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +147,6 @@ CREATE TABLE `order_status` (
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `order_number` varchar(300) NOT NULL,
   `order_status_id` int NOT NULL,
   `ordered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -212,15 +211,16 @@ CREATE TABLE `products` (
   `allerge` varchar(1000) DEFAULT NULL,
   `expiration_date` varchar(1000) NOT NULL,
   `price` decimal(10,0) NOT NULL,
-  `detail_image_url` varchar(1000) NOT NULL,
+  `detail_image_url` varchar(3000) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `stock` int NOT NULL DEFAULT '999',
   PRIMARY KEY (`id`),
   KEY `sub_category_id` (`sub_category_id`),
   KEY `packing_type_id` (`packing_type_id`),
   CONSTRAINT `products_ibfk_1` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_categories` (`id`),
   CONSTRAINT `products_ibfk_2` FOREIGN KEY (`packing_type_id`) REFERENCES `packing_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +232,6 @@ CREATE TABLE `products` (
 CREATE TABLE `reviews` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(300) NOT NULL,
-  `user_upload_image_url` varchar(3000) NOT NULL,
   `contant` varchar(3000) NOT NULL,
   `user_id` int NOT NULL,
   `product_id` int NOT NULL,
@@ -283,7 +282,23 @@ CREATE TABLE `small_banner_table` (
   `id` int NOT NULL AUTO_INCREMENT,
   `image_url` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `special_price`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `special_price` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `discount` int NOT NULL,
+  `products_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `products_id` (`products_id`),
+  CONSTRAINT `special_price_ibfk_1` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -318,12 +333,13 @@ CREATE TABLE `users` (
   `gender_id` int NOT NULL,
   `birthday` varchar(300) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `point` int DEFAULT '100000',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_ukey` (`email`),
   KEY `gender_id` (`gender_id`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`gender_id`) REFERENCES `genders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -363,5 +379,11 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20221018090653'),
   ('20221018090706'),
   ('20221020073800'),
-  ('20221020073813');
+  ('20221020073813'),
+  ('20221023062453'),
+  ('20221023115459'),
+  ('20221023122837'),
+  ('20221025043917'),
+  ('20221025111418'),
+  ('20221026072339');
 UNLOCK TABLES;

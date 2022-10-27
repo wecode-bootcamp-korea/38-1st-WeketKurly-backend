@@ -20,7 +20,7 @@ const loginRequired = async (req, res, next) => {
   );
 
   // 3) Check if user still exists
-  const user = await usersDao.signIn(decoded.id);
+  const user = await usersDao.searchUser(decoded.id);
 
   if (!user) {
     const error = new Error("USER_DOES_NOT_EXIST");
