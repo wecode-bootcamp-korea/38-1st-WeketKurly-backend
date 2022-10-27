@@ -1,6 +1,7 @@
 const detailService = require("../service/detailService");
+const { catchAsync } = require("../util/error");
 
-const getProducts = async (req, res, next) => {
+const getProducts = catchAsync(async (req, res, next) => {
   const { productId } = req.params;
 
   if (!productId) {
@@ -9,6 +10,6 @@ const getProducts = async (req, res, next) => {
 
   const data = await detailService.getProducts(productId);
   return res.json({ productData: data });
-};
+});
 
 module.exports = { getProducts };

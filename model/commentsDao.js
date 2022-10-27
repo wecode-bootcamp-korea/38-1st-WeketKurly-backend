@@ -10,7 +10,7 @@ const createComment = async (title, contents, productId, userId) => {
   return data.insertId;
 };
 
-const searchComment = async () => {
+const searchComment = async (productId) => {
   return await myDataSource.query(`
   SELECT
   product_id AS product_id,
@@ -25,7 +25,8 @@ const searchComment = async () => {
   ) AS review
   FROM reviews AS r
   LEFT JOIN users AS u ON r.user_id = u.id
-  GROUP BY product_id 
+  WHERE product_id = ${productId}
+  GROUP BY productId 
   `);
 };
 

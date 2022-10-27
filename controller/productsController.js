@@ -1,12 +1,13 @@
 const productsService = require("../service/productsService");
+const { catchAsync } = require("../util/error");
 
-const getProducts = async (req, res, next) => {
+const getProducts = catchAsync(async (req, res, next) => {
   const product = await productsService.getProducts();
 
   return res.json({ item: product });
-};
+});
 
-const getMdProducts = async (req, res, next) => {
+const getMdProducts = catchAsync(async (req, res, next) => {
   const { categoriesId } = req.params;
 
   if (!categoriesId) {
@@ -16,15 +17,15 @@ const getMdProducts = async (req, res, next) => {
   const data = await productsService.getMdProducts(categoriesId);
 
   return res.json({ item: data });
-};
+});
 
-const getSpecialPriceProducts = async (req, res, next) => {
+const getSpecialPriceProducts = catchAsync(async (req, res, next) => {
   const data = await productsService.getSpecialPriceProducts();
 
   return res.json({ item: data });
-};
+});
 
-const getAllProducts = async (req, res, next) => {
+const getAllProducts = catchAsync(async (req, res, next) => {
   const { maincategoriesId, subcategoriesId, sorttype } = req.query;
 
   const data = await productsService.getAllProducts(
@@ -34,7 +35,7 @@ const getAllProducts = async (req, res, next) => {
   );
 
   return res.json({ item: data });
-};
+});
 
 module.exports = {
   getProducts,
