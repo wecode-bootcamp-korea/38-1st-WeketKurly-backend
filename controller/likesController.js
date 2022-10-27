@@ -29,4 +29,18 @@ const inputLikes = async (req, res) => {
 }
 }
 
-module.exports = { getLikes, inputLikes };
+const checkLike = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { productId } = req.body;
+
+    const checklike = await likeService.checkLike(userId, productId);
+    return res.status(201).json({ data: checklike});
+
+  } catch (err) {
+    console.log(err);
+    return res.status(err.statusCode || 500).json({ message: err.message });
+}
+}
+
+module.exports = { getLikes, inputLikes, checkLike };
