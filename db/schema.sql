@@ -38,7 +38,7 @@ CREATE TABLE `carts` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +147,6 @@ CREATE TABLE `order_status` (
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `order_number` varchar(300) NOT NULL,
   `order_status_id` int NOT NULL,
   `ordered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -215,12 +214,13 @@ CREATE TABLE `products` (
   `detail_image_url` varchar(3000) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `stock` int NOT NULL DEFAULT '999',
   PRIMARY KEY (`id`),
   KEY `sub_category_id` (`sub_category_id`),
   KEY `packing_type_id` (`packing_type_id`),
   CONSTRAINT `products_ibfk_1` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_categories` (`id`),
   CONSTRAINT `products_ibfk_2` FOREIGN KEY (`packing_type_id`) REFERENCES `packing_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +232,6 @@ CREATE TABLE `products` (
 CREATE TABLE `reviews` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(300) NOT NULL,
-  `user_upload_image_url` varchar(3000) NOT NULL,
   `contant` varchar(3000) NOT NULL,
   `user_id` int NOT NULL,
   `product_id` int NOT NULL,
@@ -334,6 +333,7 @@ CREATE TABLE `users` (
   `gender_id` int NOT NULL,
   `birthday` varchar(300) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `point` int DEFAULT '100000',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_ukey` (`email`),
@@ -381,5 +381,10 @@ INSERT INTO `schema_migrations` (version) VALUES
   ('20221020073800'),
   ('20221020073813'),
   ('20221023062453'),
+  ('20221023115459'),
+  ('20221023122837'),
+  ('20221025043917'),
+  ('20221025111418'),
+  ('20221026072339');
   ('20221025043917');
 UNLOCK TABLES;
