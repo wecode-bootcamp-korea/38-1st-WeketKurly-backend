@@ -4,19 +4,18 @@ const getProducts = async (productId) => {
   const data = await myDataSource.query(
     `
   SELECT 
-  p.id AS productId,
-  p.name AS productName,
-  p.thumnail_image_url AS thumbnailImageUrl,
-  p.short_description AS shortDescription,
-  p.contactant AS productContactant,
-  pt.packing_types AS packingType,
+  p.id AS product_id,
+  p.name AS product_name,
+  p.thumnail_image_url AS thumbnail_image_url,
+  p.short_description AS short_description,
+  p.contactant AS contactant,
+  pt.packing_types AS packing_types,
   p.weight,
   p.origin,
   p.allerge,
-  p.expiration_date AS expriationDate,
+  p.expiration_date AS expiration_date,
   p.price,
-  p.detail_image_url AS detailImageUrl,
-  p.stock,
+  p.detail_image_url AS detail_image_url,
   JSON_ARRAYAGG(
     JSON_OBJECT(
     "reviewId", r.id,
@@ -31,7 +30,7 @@ const getProducts = async (productId) => {
   LEFT JOIN reviews AS r ON r.product_id = p.id
   LEFT JOIN users AS u ON r.user_id = u.id
   WHERE p.id = ?
-  GROUP BY productId
+  GROUP BY product_id
   `,
     [productId]
   );
